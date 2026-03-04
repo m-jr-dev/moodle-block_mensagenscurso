@@ -15,37 +15,33 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Toggles the messaging state for the course and updates the UI accordingly.
+ * Toggles the messaging state for the course and persists it via AJAX.
  *
- * This module updates the icons, text, and visibility of certain interface elements
- * based on whether messaging is enabled or disabled for the current course.
- * It also sends an AJAX request to persist the change on the server.
- *
- * @module     block_mensagenscurso/mensagenscurso
+ * @package    block_mensagenscurso
  * @copyright  2025 Marcelo M. Almeida Júnior
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+require_once('../../config.php');
 
-// Garante que o usuário está autenticado no Moodle.
+// Ensures the user is authenticated in Moodle.
 require_login();
 
-// Obtém parâmetros obrigatórios da requisição: ID do curso e novo estado (0 ou 1).
+// Gets required request parameters: course id and new state (0 or 1).
 $courseid = required_param('courseid', PARAM_INT);
 $state = required_param('state', PARAM_INT);
 
-// Obtém o contexto do curso para verificar permissões.
+// Gets the course context to check permissions.
 $context = context_course::instance($courseid);
 
-// Verifica se o usuário tem permissão para gerenciar atividades no curso.
+// Checks if the user has permission to manage activities in the course.
 require_capability('moodle/course:manageactivities', $context);
 
-// Chave de configuração exclusiva para este curso e bloco.
+// Unique config key for this course and block.
 $key = "course_{$courseid}";
 
-// Salva o novo estado no banco de dados de configurações do Moodle para este bloco.
+// Stores the new state in Moodle configuration for this block.
 set_config($key, $state, 'block_mensagenscurso');
 
-// Retorna resposta em JSON para o frontend.
+// Returns JSON response to the frontend.
 echo json_encode(['status' => 'ok']);

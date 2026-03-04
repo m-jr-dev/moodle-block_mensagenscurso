@@ -16,8 +16,6 @@
 
 namespace block_mensagenscurso\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy Subsystem implementation for block_mensagenscurso.
  *
@@ -28,12 +26,12 @@ defined('MOODLE_INTERNAL') || die();
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class provider implements \core_privacy\local\metadata\null_provider {
-	
+
     /**
      * Returns the reason why this plugin does not store any personal data.
      *
      * @return string
-     */	
+     */
     public static function get_reason(): string {
         return get_string('privacy:metadata', 'block_mensagenscurso');
     }
